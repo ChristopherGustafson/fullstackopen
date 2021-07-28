@@ -1,13 +1,8 @@
 {
   "persons": [
     {
-      "name": "Ada Lovelace",
-      "number": "123",
-      "id": 2
-    },
-    {
       "name": "Stoffe",
-      "number": "123",
+      "number": "1231231",
       "id": 3
     }
   ]
