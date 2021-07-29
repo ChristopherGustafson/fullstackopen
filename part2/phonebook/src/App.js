@@ -47,14 +47,21 @@ const App = () => {
         PersonService.update(existingPerson.id, {
           name: newName,
           number: newNumber,
-        }).then((response) => {
-          setPersons(
-            persons.map((person) =>
-              person.id === response.id ? response : person
-            )
-          );
-          showMessage(`The number of ${response.name} was changed`, "success");
-        });
+        })
+          .then((response) => {
+            setPersons(
+              persons.map((person) =>
+                person.id === response.id ? response : person
+              )
+            );
+            showMessage(
+              `The number of ${response.name} was changed`,
+              "success"
+            );
+          })
+          .catch((error) => {
+            showMessage(error.response.data, "error");
+          });
       }
     } else {
       PersonService.create({name: newName, number: newNumber})
