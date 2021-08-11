@@ -32,6 +32,7 @@ app.use(express.static("build"));
 app.use(express.json());
 
 // Connect blogs controller to the /api/blogs endpoint
+app.use(middleware.tokenExtractor);
 app.use("/api/blogs", blogsRouter);
 app.use("/api/users", usersRouter);
 app.use("/api/login", loginRouter);
