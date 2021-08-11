@@ -4,6 +4,7 @@ const app = require("../app");
 const api = supertest(app);
 const Blog = require("../models/blog");
 const {blogs3} = require("./blogsTestData");
+const helper = require("./test_utils");
 
 beforeEach(async () => {
   // Clear database
@@ -41,11 +42,14 @@ test("All blog posts have an id defined", async () => {
 
 // Testing data posting
 test("A valid blog can be added correctly", async () => {
+  // Find all users, and use first one as connected user
+  const users = await helper.usersInDb();
   const newBlog = {
     title: "Creating a Jenkins CI/CD pipeline",
     author: "Christopher Gustafson",
     url: "https://christophergustafson.medium.com/creating-a-jenkins-ci-cd-pipeline-45bf747643b5",
     likes: 2,
+    userId: users[0].id,
   };
 
   await api
@@ -71,10 +75,12 @@ test("An invalid blog entry that is added is responded with as 400 Bad Request",
 }, 100000);
 
 test("A blog that is added without likes field will have default likes = 0", async () => {
+  const users = await helper.usersInDb();
   const newBlog = {
     title: "Creating a Jenkins CI/CD pipeline, no likes",
     author: "Christopher Gustafson",
     url: "https://christophergustafson.medium.com/creating-a-jenkins-ci-cd-pipeline-45bf747643b5",
+    userId: users[0].id,
   };
   const blogResponse = await api
     .post("/api/blogs")
@@ -111,7 +117,6 @@ test("A field in a blog should be updatable", async () => {
   await api.put(`/api/blogs/${initialBlogs.body[1].id}`).send(newBlog);
 
   const newBlogs = await api.get("/api/blogs");
-  console.log(newBlogs.body[1]);
   expect(newBlogs.body).toHaveLength(initialBlogs.body.length);
   expect(newBlogs.body[1].likes).toBe(newBlog.likes);
 });
