@@ -49,6 +49,7 @@ const App = () => {
   const handleLogin = async ({username, password}) => {
     try {
       const user = await loginService.login({username, password});
+      console.log(user);
       // Save user to local storage
       window.localStorage.setItem("loggedInUser", JSON.stringify(user));
       // Save user to state
@@ -88,6 +89,16 @@ const App = () => {
     }
   };
 
+  const handleBlogDelete = async (blogId) => {
+    try {
+      await blogService.remove(blogId);
+      showMessage("Blog successfully removed", "success");
+      setBlogs(blogs.filter((b) => b.id !== blogId));
+    } catch (exception) {
+      showMessage("Unauthorized", "error");
+    }
+  };
+
   const handleBlogLike = async (blog) => {
     try {
       const likedBlog = await blogService.like(blog);
@@ -120,7 +131,13 @@ const App = () => {
           {blogs
             .sort((a, b) => b.likes - a.likes)
             .map((blog) => (
-              <Blog key={blog.id} blog={blog} handleLike={handleBlogLike} />
+              <Blog
+                key={blog.id}
+                blog={blog}
+                handleDelete={handleBlogDelete}
+                handleLike={handleBlogLike}
+                isDeletable={blog.user && blog.user.username === user.username}
+              />
             ))}
         </div>
       )}

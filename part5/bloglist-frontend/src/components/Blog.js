@@ -1,6 +1,6 @@
 import React from "react";
 import Togglable from "./Togglable";
-const Blog = ({blog, handleLike}) => {
+const Blog = ({blog, handleLike, handleDelete, isDeletable}) => {
   const blogStyle = {
     paddingTop: 10,
     paddingLeft: 2,
@@ -21,6 +21,9 @@ const Blog = ({blog, handleLike}) => {
         <br />
         {blog.user ? blog.user.name : ""}
         <br />
+        {isDeletable && (
+          <button onClick={() => handleDelete(blog.id)}>Remove</button>
+        )}
       </Togglable>
     </div>
   );
