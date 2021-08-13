@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from "prop-types";
 import Togglable from "./Togglable";
 const Blog = ({blog, handleLike, handleDelete, isDeletable}) => {
   const blogStyle = {
@@ -34,6 +35,13 @@ const Blog = ({blog, handleLike, handleDelete, isDeletable}) => {
       </Togglable>
     </div>
   );
+};
+
+Blog.propTypes = {
+  blog: PropTypes.object.isRequired,
+  handleLike: PropTypes.func.isRequired,
+  handleDelete: PropTypes.func.isRequired,
+  isDeletable: PropTypes.bool.isRequired,
 };
 
 export default Blog;

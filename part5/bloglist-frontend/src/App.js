@@ -136,7 +136,9 @@ const App = () => {
                 blog={blog}
                 handleDelete={handleBlogDelete}
                 handleLike={handleBlogLike}
-                isDeletable={blog.user && blog.user.username === user.username}
+                isDeletable={
+                  blog.user ? blog.user.username === user.username : false
+                }
               />
             ))}
         </div>

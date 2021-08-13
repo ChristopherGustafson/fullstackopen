@@ -1,5 +1,5 @@
+import React from "react";
 // Possible notification types: error, success
-
 const notificationStyles = {
   background: "lightgrey",
   fontSize: 20,
