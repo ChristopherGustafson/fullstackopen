@@ -3,6 +3,7 @@ const Blog = require("../models/blog");
 const User = require("../models/user");
 const jwt = require("jsonwebtoken");
 const {userExtractor} = require("../utils/middleware");
+const logger = require("../utils/logger");
 
 blogsRouter.get("/", async (request, response) => {
   const blogs = await Blog.find({}).populate("user", {
@@ -32,11 +33,14 @@ blogsRouter.post("/", userExtractor, async (request, response) => {
 });
 
 blogsRouter.delete("/:id", userExtractor, async (request, response) => {
+  logger.info("Received delete request for blog with id ", request.params.id);
   const blog = await Blog.findById(request.params.id);
   if (blog.user.toString() === request.user.id.toString()) {
+    logger.info("Delete request authorized for id ", request.params.id);
     await Blog.findByIdAndDelete(request.params.id);
     response.status(204).end();
   } else {
+    logger.error("Delete request not authorized for id ".request.params.id);
     response.status(401).json({error: "Unauthorized"});
   }
 });
