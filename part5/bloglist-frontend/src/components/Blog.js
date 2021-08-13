@@ -22,7 +22,14 @@ const Blog = ({blog, handleLike, handleDelete, isDeletable}) => {
         {blog.user ? blog.user.name : ""}
         <br />
         {isDeletable && (
-          <button onClick={() => handleDelete(blog.id)}>Remove</button>
+          <button
+            onClick={() => {
+              if (window.confirm(`Do you want to remove ${blog.title}`))
+                handleDelete(blog.id);
+            }}
+          >
+            Remove
+          </button>
         )}
       </Togglable>
     </div>
