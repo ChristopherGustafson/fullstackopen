@@ -1,6 +1,6 @@
 import React, {useState} from "react";
 
-const CreateBlogForm = ({handleBlogSubmit}) => {
+const BlogForm = ({handleBlogSubmit}) => {
   const [newTitle, setNewTitle] = useState("");
   const [newAuthor, setNewAuthor] = useState("");
   const [newUrl, setNewUrl] = useState("");
@@ -60,4 +60,4 @@ const CreateBlogForm = ({handleBlogSubmit}) => {
   );
 };
 
-export default CreateBlogForm;
+export default BlogForm;
