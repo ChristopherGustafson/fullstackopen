@@ -12,26 +12,27 @@ const Blog = ({blog, handleLike, handleDelete, isDeletable}) => {
 
   return (
     <div style={blogStyle}>
-      {blog.title} {blog.author}
-      <br />
+      <div className="blog-title">{blog.title}</div>
+      <div className="blog-author">{blog.author}</div>
       <Togglable buttonLabel="View">
-        {blog.url}
-        <br />
-        Likes {blog.likes}{" "}
-        <button onClick={() => handleLike(blog)}>Like</button>
-        <br />
-        {blog.user ? blog.user.name : ""}
-        <br />
-        {isDeletable && (
-          <button
-            onClick={() => {
-              if (window.confirm(`Do you want to remove ${blog.title}`))
-                handleDelete(blog.id);
-            }}
-          >
-            Remove
-          </button>
-        )}
+        <div className="blog-url">{blog.url}</div>
+        <div className="blog-likes">
+          Likes {blog.likes}{" "}
+          <button onClick={() => handleLike(blog)}>Like</button>{" "}
+        </div>
+        <div>{blog.user ? blog.user.name : ""}</div>
+        <div>
+          {isDeletable && (
+            <button
+              onClick={() => {
+                if (window.confirm(`Do you want to remove ${blog.title}`))
+                  handleDelete(blog.id);
+              }}
+            >
+              Remove
+            </button>
+          )}
+        </div>
       </Togglable>
     </div>
   );
