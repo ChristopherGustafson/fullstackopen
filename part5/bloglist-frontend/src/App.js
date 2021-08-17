@@ -74,14 +74,14 @@ const App = () => {
     blogFormRef.current.toggleVisibility();
     console.log("Creating new blog with title ", newBlog.title);
     try {
-      const blog = await blogService.create({
+      const createdBlog = await blogService.create({
         title: newBlog.title,
         author: newBlog.author,
         url: newBlog.url,
       });
-      setBlogs(blogs.concat(blog));
+      setBlogs(blogs.concat({...createdBlog, user: user}));
       showMessage(
-        `A new blog ${blog.title} by ${blog.author} has been created`,
+        `A new blog ${createdBlog.title} by ${createdBlog.author} has been created`,
         "success"
       );
     } catch (exception) {
