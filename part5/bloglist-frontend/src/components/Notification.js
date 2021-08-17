@@ -22,10 +22,19 @@ const Notification = ({message, type}) => {
   }
 
   if (type === "error") {
-    return <div style={{...notificationStyles, ...errorStyles}}>{message}</div>;
+    return (
+      <div className="error" style={{...notificationStyles, ...errorStyles}}>
+        {message}
+      </div>
+    );
   } else if (type === "success") {
     return (
-      <div style={{...notificationStyles, ...successStyles}}>{message}</div>
+      <div
+        className="success"
+        style={{...notificationStyles, ...successStyles}}
+      >
+        {message}
+      </div>
     );
   }
   return <div style={notificationStyles}>{message}</div>;
