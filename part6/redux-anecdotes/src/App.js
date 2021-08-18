@@ -4,7 +4,6 @@ import AnecdoteForm from "./components/AnecdoteForm";
 import AnecdoteList from "./components/AnecdoteList";
 import Filter from "./components/Filter";
 import Notification from "./components/Notification";
-import anecdoteService from "./services/anecdotes";
 import {initAnecdotes} from "./reducers/anecdoteReducer";
 
 const App = () => {
@@ -12,9 +11,7 @@ const App = () => {
 
   // Initialize anecdotes on render
   useEffect(() => {
-    anecdoteService.getAll().then((anectodes) => {
-      dispatch(initAnecdotes(anectodes));
-    });
+    dispatch(initAnecdotes());
   }, [dispatch]);
 
   return (

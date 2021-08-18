@@ -23,9 +23,16 @@ const create = async (newAnecdote) => {
   return response.data;
 };
 
+const update = async (anecdote) => {
+  console.log(anecdote);
+  const response = await axios.put(`${baseUrl}/${anecdote.id}`, anecdote);
+  return response.data;
+};
+
 const anecdoteService = {
   getAll,
   create,
+  update,
 };
 
 export default anecdoteService;
