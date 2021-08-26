@@ -1,5 +1,6 @@
 import React, {useState} from "react";
 import {Switch, Route, Link, useRouteMatch, useHistory} from "react-router-dom";
+import {useField} from "./hooks";
 
 const Menu = () => {
   const padding = {
@@ -83,18 +84,25 @@ const Footer = () => (
 );
 
 const CreateNew = (props) => {
-  const [content, setContent] = useState("");
-  const [author, setAuthor] = useState("");
-  const [info, setInfo] = useState("");
+  const content = useField("content");
+  const author = useField("author");
+  const info = useField("info");
 
   const handleSubmit = (e) => {
     e.preventDefault();
     props.addNew({
-      content,
-      author,
-      info,
+      content: content.inputAttributes.value,
+      author: author.inputAttributes.value,
+      info: info.inputAttributes.value,
       votes: 0,
     });
+  };
+
+  const handleReset = (event) => {
+    event.preventDefault();
+    content.reset();
+    author.reset();
+    info.reset();
   };
 
   return (
@@ -103,29 +111,18 @@ const CreateNew = (props) => {
       <form onSubmit={handleSubmit}>
         <div>
           content
-          <input
-            name="content"
-            value={content}
-            onChange={(e) => setContent(e.target.value)}
-          />
+          <input {...content.inputAttributes} />
         </div>
         <div>
           author
-          <input
-            name="author"
-            value={author}
-            onChange={(e) => setAuthor(e.target.value)}
-          />
+          <input {...author.inputAttributes} />
         </div>
         <div>
           url for more info
-          <input
-            name="info"
-            value={info}
-            onChange={(e) => setInfo(e.target.value)}
-          />
+          <input {...info.inputAttributes} />
         </div>
         <button>create</button>
+        <button onClick={handleReset}>reset</button>
       </form>
     </div>
   );
@@ -163,18 +160,18 @@ const App = () => {
     history.push("/");
   };
 
-  const anecdoteById = (id) => anecdotes.find((a) => a.id === id);
+  // const anecdoteById = (id) => anecdotes.find((a) => a.id === id);
 
-  const vote = (id) => {
-    const anecdote = anecdoteById(id);
+  // const vote = (id) => {
+  //   const anecdote = anecdoteById(id);
 
-    const voted = {
-      ...anecdote,
-      votes: anecdote.votes + 1,
-    };
+  //   const voted = {
+  //     ...anecdote,
+  //     votes: anecdote.votes + 1,
+  //   };
 
-    setAnecdotes(anecdotes.map((a) => (a.id === id ? voted : a)));
-  };
+  //   setAnecdotes(anecdotes.map((a) => (a.id === id ? voted : a)));
+  // };
 
   const match = useRouteMatch("/anecdotes/:id");
   const anecdote = match
